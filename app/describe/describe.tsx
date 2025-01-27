@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { fetchGeminiData } from '~/utils/gemini';
 
 export function Describe() {
   const [maleInfo, setMaleInfo] = useState('');
@@ -9,14 +10,10 @@ export function Describe() {
     e.preventDefault();
 
     try {
-      // Add your API call or matching logic here
-      // Now including both male and female info in the result
+      const data = await fetchGeminiData(maleInfo, femaleInfo);
       setResult(`
-        Thông tin bạn nam: ${maleInfo}
-        
-        Thông tin bạn nữ: ${femaleInfo}
-        
-        Dựa trên thông tin của cả hai, đây là kết quả tư vấn...
+        Dựa trên thông tin của cả hai, đây là kết quả tư vấn:&#10;
+        ${data}
       `);
     } catch (error) {
       console.error('Error:', error);
