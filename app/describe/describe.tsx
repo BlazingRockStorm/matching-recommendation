@@ -4,17 +4,14 @@ import { fetchGeminiData } from '~/utils/gemini';
 export function Describe() {
   const [maleInfo, setMaleInfo] = useState('');
   const [femaleInfo, setFemaleInfo] = useState('');
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<any>('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
       const data = await fetchGeminiData(maleInfo, femaleInfo);
-      setResult(`
-        Dựa trên thông tin của cả hai, đây là kết quả tư vấn:&#10;
-        ${data}
-      `);
+      setResult(data);
     } catch (error) {
       console.error('Error:', error);
       setResult('Có lỗi xảy ra, vui lòng thử lại.');
@@ -56,8 +53,9 @@ export function Describe() {
       </form>
 
       {result && (
-        <div className="mt-6 p-4 border rounded-md">
-          <p>{result}</p>
+        <div className="mt-6 p-4 border rounded-md display-linebreak">
+          <p>Dựa trên thông tin của cả hai, đây là kết quả tư vấn:</p>
+          {result}
         </div>
       )}
     </div>
