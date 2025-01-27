@@ -5,16 +5,20 @@ export function Describe() {
   const [maleInfo, setMaleInfo] = useState('');
   const [femaleInfo, setFemaleInfo] = useState('');
   const [result, setResult] = useState<any>('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const data = await fetchGeminiData(maleInfo, femaleInfo);
-      setResult(data);
+      setResult('Dựa trên thông tin của cả hai, đây là kết quả tư vấn:\n'+data);
     } catch (error) {
       console.error('Error:', error);
       setResult('Có lỗi xảy ra, vui lòng thử lại.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,15 +50,21 @@ export function Describe() {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="border px-8 py-2 rounded-md">
-            Bắt đầu tư vấn
+            disabled={isLoading}
+            className="border px-8 py-2 rounded-md disabled:opacity-50">
+            {isLoading ? 'Đang xử lý...' : 'Bắt đầu tư vấn'}
           </button>
         </div>
       </form>
 
-      {result && (
+      {isLoading && (
+        <div className="mt-6 text-center">
+          <p>Đang xử lý thông tin...</p>
+        </div>
+      )}
+
+      {!isLoading && result && (
         <div className="mt-6 p-4 border rounded-md display-linebreak">
-          <p>Dựa trên thông tin của cả hai, đây là kết quả tư vấn:</p>
           {result}
         </div>
       )}
