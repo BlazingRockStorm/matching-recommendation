@@ -4,9 +4,14 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+}
+button {
+  background-color: black;
+  color: white;
+  transition: all 0.3s ease;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+button:hover {
+  background-color: white;
+  color: black;
 }
