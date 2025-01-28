@@ -8,5 +8,5 @@
 .vscode/
 .idea/
 
-# Local Netlify folder
+# Netlify
 .netlify
