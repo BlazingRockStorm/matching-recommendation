@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { fetchGeminiData } from '~/utils/gemini';
+import ReactMarkdown from 'react-markdown';
 
 export function Describe() {
   const [maleInfo, setMaleInfo] = useState('');
@@ -13,7 +14,7 @@ export function Describe() {
 
     try {
       const data = await fetchGeminiData(maleInfo, femaleInfo);
-      setResult('Dựa trên thông tin của cả hai, đây là kết quả tư vấn:\n'+data);
+      setResult('Dựa trên thông tin của cả hai, đây là kết quả tư vấn:\n\n'+data);
     } catch (error) {
       console.error('Error:', error);
       setResult('Có lỗi xảy ra, vui lòng thử lại.');
@@ -65,7 +66,7 @@ export function Describe() {
 
       {!isLoading && result && (
         <div className="mt-6 p-4 border rounded-md display-linebreak">
-          {result}
+          <ReactMarkdown>{result}</ReactMarkdown>
         </div>
       )}
     </div>
